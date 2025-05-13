@@ -15,7 +15,6 @@ import { createApp } from "vue";
 
 // Styles
 import "unfonts.css";
-import "./assets/styles/theme.css"; // ← loads your white defaults
 
 import { createPinia } from "pinia";
 

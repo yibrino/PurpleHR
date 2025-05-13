@@ -12,10 +12,12 @@
 </template>
 <script>
 import AppBar from './AppBar.vue'
+import SideNav from './SideNav.vue';
 export default {
 
     component:{
         AppBar,
+        SideNav
     },
   
     
