@@ -1,6 +1,8 @@
 import { defineStore } from "pinia";
 import { onBeforeMount } from "vue";
 import employeesData from "@/assets/employees.json";
+import { nextTick } from "vue"; // Import nextTick from Vue
+
 export const useEmployeeStore = defineStore("employee", {
   state: () => ({
     dialogTitle: "Employee",
@@ -36,12 +38,11 @@ export const useEmployeeStore = defineStore("employee", {
       {
         key: "department",
         label: "Department",
-        fieldName: "autocomplete",
+        fieldName: "input",
         cols: 6,
         md: 6,
         prependIcon: "mdi-office-building",
-        items: ["AI and Computer Science", "Engineering", "HR"],
-        rules: [],
+        rules: [(v) => !!v || "Required"],
       },
       {
         key: "employmentDate",
@@ -90,36 +91,36 @@ export const useEmployeeStore = defineStore("employee", {
     initializeItems() {
       this.items = [...employeesData]; // Use the imported JSON data
     },
-
+    // Open the dialog
     openDialog() {
       this.dialogVisible = true;
     },
-
+    // Open the EditDialog
     openEditDialog() {
       this.dialogEditVisible = true;
     },
-
+    // Open the DeleteDialog
     openDeleteDialog(item) {
       this.editedItem = { ...item };
       this.dialogDeleteVisible = true;
     },
-
+    // close the Dialog
     closeDialog() {
       this.dialogVisible = false;
-      this.$nextTick(() => {
+      nextTick(() => {
         this.editedItem = { ...this.defaultItem };
         this.editedIndex = -1;
       });
     },
-
+    // close the EditDialog
     closeEditDialog() {
       this.dialogEditVisible = false;
-      this.$nextTick(() => {
+      nextTick(() => {
         this.editedItem = { ...this.defaultItem };
         this.editedIndex = -1;
       });
     },
-
+    // close the DeleteDialog
     closeDeleteDialog() {
       this.dialogDeleteVisible = false;
       this.$nextTick(() => {
@@ -127,18 +128,27 @@ export const useEmployeeStore = defineStore("employee", {
         this.editedIndex = -1;
       });
     },
-
+    // save an Item
     saveItem() {
       if (this.editedIndex > -1) {
-        Object.assign(this.items[this.editedIndex], this.editedItem);
+        // Update the existing item
+        this.items[this.editedIndex] = { ...this.editedItem }; // Directly replace the item
+        console.log("Updated item:", this.items[this.editedIndex]); // Log the updated item to check if it's working
       } else {
-        const newId = Math.max(...this.items.map((item) => item.id)) + 1;
-        this.items.push({ ...this.editedItem, id: newId });
+        // Add a new item
+        const maxId = this.items.length
+          ? Math.max(...this.items.map((item) => item.id))
+          : 0;
+        const newItem = { ...this.editedItem, id: maxId + 1 };
+        this.items.push(newItem); // Push the new item into the array
+        console.log("Added new item:", newItem);
       }
+
+      // Close the dialogs after saving the item
       this.closeDialog();
       this.closeEditDialog();
     },
-
+    // Delete an item
     deleteItem() {
       this.items = this.items.filter((item) => item.id !== this.editedItem.id);
       this.closeDeleteDialog();
