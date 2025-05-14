@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar app dark rounded color="#2E2E2E"  class=" pt-3">
+  <v-app-bar app dark rounded color="purple"  class=" pt-3">
     <!-- Spacer to push elements to the right -->
     <v-spacer />
     <v-btn size="xl"  class="mr-2">

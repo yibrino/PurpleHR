@@ -3,7 +3,7 @@
       <v-navigation-drawer
         v-model="drawer"
         :rail="rail"      
-        color="#2E2E2E"
+        color="purple"
         floating
        
         >

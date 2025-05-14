@@ -25,6 +25,22 @@
       <template v-slot:item.actions="{ item }">
         <div>
           <v-btn-toggle rounded="xl" variant="outlined" divided>
+             <!-- View Profile button -->
+  <v-btn>
+    <v-tooltip location="bottom">
+      <template v-slot:activator="{ props }">
+        <v-icon
+          size="small"
+          @click="viewProfile(item)"
+          color="primary"
+          v-bind="props"
+        >
+          mdi-eye
+        </v-icon>
+      </template>
+      View Profile
+    </v-tooltip>
+  </v-btn>
         <!-- Clickable edit icon wrapped in a button -->
             <v-btn>
               <v-tooltip location="bottom">
@@ -87,7 +103,7 @@
         </v-card-title>
         <v-divider></v-divider>
         <v-card-text>
-           <v-form ref="form" v-model="isValid">
+           <v-form ref="form" v-model="isEditValid">
           <v-container>
             <v-row >
               <v-col v-for="field in employeeStore.formFields" :key="field.key" :cols="field.cols" :md="field.md" class="pa-1">
@@ -122,7 +138,7 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="red-darken-1" variant="outlined" @click="employeeStore.closeEditDialog">Cancel</v-btn>
-          <v-btn color="#452624" variant="outlined" @click="employeeStore.saveItem" :disabled="!isValid">Update</v-btn>
+          <v-btn color="#452624" variant="outlined" @click="employeeStore.saveItem" :disabled="!isEditValid">Update</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -140,6 +156,41 @@
       </v-card>
     </v-dialog>
    
+<!-- Add Dialog -->
+    <v-dialog v-model="employeeStore.dialogVisible" max-width="700px" persistent>
+      <v-card>
+        <v-card-title>
+          <span class="text-h5"> Add {{ employeeStore.dialogTitle }}</span>
+        </v-card-title>
+        <v-divider></v-divider>
+        <v-card-text>
+          <v-form ref="form" v-model="isValidAdd">
+          <v-container>
+            <v-row >
+              <v-col v-for="field in employeeStore.formFields" :key="field.key" :cols="field.cols" :md="field.md" class="pa-1">
+                <v-text-field
+                  v-if="field.fieldName == 'input'"
+                  v-model="employeeStore.editedItem[field.key]"
+                  :label="field.label"
+                  :prepend-inner-icon="field.prependIcon"
+                 :type="field.type"
+                 :rules="field.rules"
+                 variant="outlined"
+                  density="compact"              
+                ></v-text-field>
+              </v-col>
+            </v-row>
+          </v-container>
+          </v-form>
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="red-darken-1" variant="outlined" @click="employeeStore.closeDialog">Cancel</v-btn>
+          <v-btn color="#452624" variant="outlined" @click="employeeStore.saveItem" :disabled="!isValidAdd">Save</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
 
  
   </div>
@@ -155,7 +206,7 @@ export default {
     return {
       employeeStore: useEmployeeStore(),
       search: '',
-      isValid: false,
+      isEditValid: false,
       isValidAdd: false,
     };
   },
@@ -171,6 +222,7 @@ export default {
   this.employeeStore.editedIndex = this.employeeStore.items.indexOf(item); // Store the index 
   console.log("item to be edited", item);
   this.employeeStore.openEditDialog(); // Open the  dialog
+  
 }
 
   }

@@ -62,7 +62,7 @@ export const useEmployeeStore = defineStore("employee", {
         cols: 6,
         md: 6,
         prependIcon: "mdi-calendar-end",
-        rules: [],
+        rules: [(v) => !!v || "Required"],
       },
     ],
     dialogVisible: false,
