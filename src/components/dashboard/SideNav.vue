@@ -64,7 +64,7 @@ export default {
          email:"yibrah@gmail.com"
       },
       drawer: true,
-      rail:true,
+      rail:false,
       navigations: [],
       navItems:[
           {title:"Employees", value:"profile",prependIcon:"mdi-account-circle",url:"employees",role:['Admin']},
