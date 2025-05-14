@@ -91,5 +91,7 @@ export default {
 </script>
 
 <style scoped>
-/* Add any custom styles here */
+.v-data-table {
+  overflow-y: hidden !important;
+}
 </style>
