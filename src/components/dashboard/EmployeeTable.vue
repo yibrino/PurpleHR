@@ -56,7 +56,29 @@
       <template v-slot:no-data>
         <v-btn color="#452624" @click="initialize" loading>Reload</v-btn>
       </template>
+      
     </v-data-table>
+    <v-row>
+        <v-co>
+            <v-spacer>
+            </v-spacer>
+            <v-btn
+    color="grey"
+    @click="employeeStore.openDialog"
+    rounded
+    class="mt-8"
+    elevation="15"
+    style="position: fixed; bottom: 20px; right: 20px; z-index: 10;"
+    >
+    <v-icon class="me-2" color="#ffffff">mdi-account-plus</v-icon>
+    <v-tooltip activator="parent" location="top">
+        Add New {{ employeeStore.dialogTitle }}
+    </v-tooltip>
+    </v-btn>
+        </v-co>
+    </v-row>
+
+   
 <!-- Edit Dialog -->
    <v-dialog v-model="employeeStore.dialogEditVisible" max-width="700px" persistent>
       <v-card>
