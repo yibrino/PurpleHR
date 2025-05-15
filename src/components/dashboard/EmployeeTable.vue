@@ -124,7 +124,11 @@
     </v-btn>
         </v-co>
     </v-row>
-
+  <!-- Export Button -->
+  <v-btn color="#452624" class="ml-2" elevation="15" @click="exportEmployees">
+  <v-icon start color="white">mdi-download</v-icon>
+  <span style="color: white;">Export</span>
+</v-btn>
 
  
   <!-- Delete Confirmation Dialog -->
