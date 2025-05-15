@@ -19,6 +19,39 @@
             rounded
             class="mr-5"
           ></v-text-field>
+          <v-select
+  v-model="selectedDepartment"
+  :items="departments"
+  label="Filter by Department"
+  clearable
+  class="mr-3"
+  density="compact"
+  variant="outlined"
+  hide-details
+></v-select>
+
+<v-select
+  v-model="selectedEmploymentStatus"
+  :items="employmentStatusOptions"
+  label="Employment Status"
+  clearable
+  class="mr-3"
+  density="compact"
+  variant="outlined"
+  hide-details
+></v-select>
+
+<v-select
+  v-model="selectedTerminationStatus"
+  :items="terminationStatusOptions"
+  label="Termination Status"
+  clearable
+  class="mr-3"
+  density="compact"
+  variant="outlined"
+  hide-details
+></v-select>
+
         </v-toolbar>
       </template>
         <!-- Employment Date Status -->

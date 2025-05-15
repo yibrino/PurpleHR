@@ -61,7 +61,7 @@ export default {
       user: { 
          firstName:"Yibrah",
          lastName:"Mehari",
-         email:"yibrah@gmail.com"
+         email:"yibrah@pcltd.com"
       },
       drawer: true,
       rail:false,
