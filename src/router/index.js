@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
-import { components } from "vuetify/dist/vuetify.js";
 import Dashboard from "@/pages/index.vue";
 import EmployeesPage from "@/pages/EmployeesPage.vue";
+import EmployeeProfile from "@/pages/EmployeeProfile.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -9,10 +9,26 @@ const router = createRouter({
     {
       path: "/",
       name: "Dashboard",
-      redirect: '/employees',
+      redirect: "/employees",
       component: Dashboard,
       children: [
-        { path: "/employees", name: "employees", component: EmployeesPage },
+        {
+          path: "employees",
+          name: "employees",
+          component: EmployeesPage,
+        },
+        {
+          path: "employee/:id",
+          name: "EmployeeProfile",
+          component: EmployeeProfile,
+          props: true,
+        },
+        {
+          path: "employee/:id/edit",
+          name: "EmployeeProfileEdit",
+          component: EmployeeProfile,
+          props: true,
+        },
       ],
     },
   ],

@@ -103,54 +103,7 @@
         </v-co>
     </v-row>
 
-   
-<!-- Edit Dialog -->
-   <v-dialog v-model="employeeStore.dialogEditVisible" max-width="700px" persistent>
-      <v-card>
-        <v-card-title>
-          <span class="text-h5"> Edit {{ employeeStore.dialogTitle }}</span>
-        </v-card-title>
-        <v-divider></v-divider>
-        <v-card-text>
-           <v-form ref="form" v-model="isEditValid">
-          <v-container>
-            <v-row >
-              <v-col v-for="field in employeeStore.formFields" :key="field.key" :cols="field.cols" :md="field.md" class="pa-1">
-                <v-text-field
-                  v-if="field.fieldName == 'input'"
-                  v-model="employeeStore.editedItem[field.key]"
-                  :label="field.label"
-                  :prepend-inner-icon="field.prependIcon"
-                 :type="field.type"
-                 :rules="field.rules"
-                 variant="outlined"
-                  density="compact"
-                  
-                ></v-text-field>
-                <v-autocomplete
-                   v-if="field.fieldName == 'autocomplete'"
-                  v-model="employeeStore.editedItem[field.key]"
-                  :label="field.label"
-                  :items="field.items"
-                  :item-title="field.name"
-                  :prepend-inner-icon="field.prependIcon"
-                  :rules="field.rules"
-                  variant="outlined"
-                  density="compact"
-                ></v-autocomplete>
-              </v-col>
-            </v-row>
-          </v-container>
-          </v-form>
-        </v-card-text>
-        <v-divider></v-divider>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="red-darken-1" variant="outlined" @click="employeeStore.closeEditDialog">Cancel</v-btn>
-          <v-btn color="#452624" variant="outlined" @click="employeeStore.saveItem" :disabled="!isEditValid">Update</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+
  
   <!-- Delete Confirmation Dialog -->
     <v-dialog v-model="employeeStore.dialogDeleteVisible" max-width="600px" min-height="100px">
@@ -226,6 +179,12 @@ export default {
     initialize() {
       this.employeeStore.initializeItems();
     },
+    // view employeeProfile
+viewProfile(emp) {
+    console.log("id",emp.id),
+    this.$router.push({ name: 'EmployeeProfile', params: { id: emp.id } }),
+    this.employeeStore.isEditing=false
+  },
    editItem(item) {
   this.employeeStore.editedItem = { ...item }; // Copy item data into editedItem
   this.employeeStore.editedIndex = this.employeeStore.items.indexOf(item); // Store the index 
