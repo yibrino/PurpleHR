@@ -128,25 +128,11 @@ export const useEmployeeStore = defineStore("employee", {
         this.editedIndex = -1;
       });
     },
-    // save an Item
-    saveItem() {
-      if (this.editedIndex > -1) {
-        // Update the existing item
-        this.items[this.editedIndex] = { ...this.editedItem }; // Directly replace the item
-        console.log("Updated item:", this.items[this.editedIndex]); // Log the updated item to check if it's working
-      } else {
-        // Add a new item
-        const maxId = this.items.length
-          ? Math.max(...this.items.map((item) => item.id))
-          : 0;
-        const newItem = { ...this.editedItem, id: maxId + 1 };
-        this.items.push(newItem); // Push the new item into the array
-        console.log("Added new item:", newItem);
-      }
-
-      // Close the dialogs after saving the item
+    // Add an Employee
+    addEmployee() {
+      const maxId = Math.max(...this.items.map((item) => item.id), 0);
+      this.items.push({ ...this.editedItem, id: maxId + 1 });
       this.closeDialog();
-      this.closeEditDialog();
     },
     // Delete an item
     deleteItem() {

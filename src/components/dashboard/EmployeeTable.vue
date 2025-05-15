@@ -196,7 +196,7 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="red-darken-1" variant="outlined" @click="employeeStore.closeDialog">Cancel</v-btn>
-          <v-btn color="#452624" variant="outlined" @click="employeeStore.saveItem" :disabled="!isValidAdd">Save</v-btn>
+          <v-btn color="#452624" variant="outlined" @click="employeeStore.addEmployee" :disabled="!isValidAdd">Save</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
