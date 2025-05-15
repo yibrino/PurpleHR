@@ -113,6 +113,8 @@
   <v-btn
     color="#452624"
     variant="outlined"
+    accept=".csv, .json"
+
     @click="$refs.importInput.click()"
   >
     <v-icon start>mdi-upload</v-icon>
@@ -279,8 +281,9 @@ exportEmployees() {
   }
 
   const headers = this.employeeStore.columns.map(h => h.title);
-  const keys    = this.employeeStore.columns.map(h => h.key);
-
+  const keys = this.employeeStore.columns
+    .filter(col => col.key !== 'actions')
+    .map(col => col.key);
   console.log('Headers:', headers);
   console.log('Keys:   ', keys);
   console.log('Rows:   ', this.filteredEmployees);
@@ -306,44 +309,58 @@ exportEmployees() {
   link.download = 'employees.csv';
   link.click();
 },
-/** IMPORT CSV **/
+
 importEmployees(event) {
-      const file = event.target.files[0];
-      if (!file) return;
+  const file = event.target.files[0];
+  if (!file) return;
 
-      const reader = new FileReader();
-      reader.onload = e => {
-        const text = e.target.result;
-        const [hdrLine, ...lines] = text.trim().split('\n');
-        const headers = hdrLine.split(',').map(h => h.replace(/(^")|("$)/g, ''));
-        const newRecords = lines.map(line => {
-          const cols = line.match(/(".*?"|[^",\s]+)(?="|,|\s*$)/g);
-          const obj = {};
-          headers.forEach((h, i) => {
-            obj[this.mapHeaderToKey(h)] = cols[i]?.replace(/^"|"$/g, '');
-          });
-          return obj;
+  const extension = file.name.split('.').pop().toLowerCase();
+  const reader = new FileReader();
+
+  reader.onload = e => {
+    const content = e.target.result;
+
+    if (extension === 'csv') {
+      const [hdrLine, ...lines] = content.trim().split('\n');
+      const headers = hdrLine.split(',').map(h => h.replace(/(^")|("$)/g, ''));
+      const newRecords = lines.map(line => {
+        const cols = line.match(/(".*?"|[^",\s]+)(?="|,|\s*$)/g);
+        const obj = {};
+        headers.forEach((h, i) => {
+          obj[this.mapHeaderToKey(h)] = cols[i]?.replace(/^"|"$/g, '');
         });
+        return obj;
+      });
 
-        this.employeeStore.items.push(...newRecords);
-        alert('Imported successfully!');
-      };
-      reader.readAsText(file);
-      event.target.value = '';
-    },
+      this.employeeStore.items.push(...newRecords);
+      alert('CSV imported successfully!');
+    }
 
-    // map CSV header to store key
-    mapHeaderToKey(header) {
-      const col = this.employeeStore.columns.find(c => c.title === header);
-      return col ? col.key : header;
-    },
+    else if (extension === 'json') {
+      try {
+        const jsonData = JSON.parse(content);
+        if (Array.isArray(jsonData)) {
+          this.employeeStore.items.push(...jsonData);
+          alert('JSON imported successfully!');
+        } else {
+          alert('Invalid JSON format. Expected an array of records.');
+        }
+      } catch (err) {
+        alert('Failed to parse JSON: ' + err.message);
+      }
+    }
 
-    // map CSV header to store key
-    mapHeaderToKey(header) {
-      const col = this.employeeStore.columns.find(c => c.title === header);
-      return col ? col.key : header;
-    },
+    else {
+      alert('Unsupported file type. Please upload a CSV or JSON file.');
+    }
+  };
 
+  reader.readAsText(file);
+  event.target.value = ''; // reset the file input
+},
+
+
+ 
 // employment status
 formatEmploymentStatus(dateStr) {
       const today = new Date();
