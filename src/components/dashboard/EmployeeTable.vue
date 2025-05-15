@@ -21,6 +21,15 @@
           ></v-text-field>
         </v-toolbar>
       </template>
+        <!-- Employment Date Status -->
+        <template v-slot:item.employmentDate="{ item }">
+        {{ formatEmploymentStatus(item.employmentDate) }}
+      </template>
+
+      <!-- Termination Date Status -->
+      <template v-slot:item.terminationDate="{ item }">
+        {{ formatTerminationStatus(item.terminationDate) }}
+      </template>
 
       <template v-slot:item.actions="{ item }">
         <div>
@@ -223,7 +232,20 @@ export default {
   console.log("item to be edited", item);
   this.employeeStore.openEditDialog(); // Open the  dialog
   
-}
+},
+
+// employment status
+formatEmploymentStatus(dateStr) {
+      const today = new Date();
+      const date = new Date(dateStr);
+      return date > today ? 'Employed Soon' : 'Currently Employed';
+    },
+    // termination status
+    formatTerminationStatus(dateStr) {
+      const today = new Date();
+      const date = new Date(dateStr);
+      return date > today ? 'To Be Terminated' : 'Terminated';
+    },
 
   }
 };
