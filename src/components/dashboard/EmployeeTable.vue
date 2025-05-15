@@ -129,6 +129,14 @@
   <v-icon start color="white">mdi-download</v-icon>
   <span style="color: white;">Export</span>
 </v-btn>
+ <!-- Import Button-->
+ <v-btn color="#452624" variant="outlined" @click="$refs.importInput.click()" class="ml-2">
+      <v-icon start>mdi-upload</v-icon>
+      Import
+    </v-btn>
+
+    <!-- Hidden file input -->
+    <input ref="importInput" type="file" @change="importEmployees" accept=".csv" style="display: none" />
 
  
   <!-- Delete Confirmation Dialog -->
@@ -285,6 +293,38 @@ exportEmployees() {
   link.download = 'employees.csv';
   link.click();
 },
+ /** IMPORT CSV **/
+ importEmployees(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = e => {
+        const text = e.target.result;
+        const [hdrLine, ...lines] = text.trim().split('\n');
+        const headers = hdrLine.split(',').map(h => h.replace(/(^")|("$)/g, ''));
+        const newRecords = lines.map(line => {
+          const cols = line.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g);
+          const obj = {};
+          headers.forEach((h, i) => {
+            obj[this.mapHeaderToKey(h)] = cols[i]?.replace(/^"|"$/g, '');
+          });
+          return obj;
+        });
+
+        // Merge records into the store
+        this.employeeStore.items.push(...newRecords);
+      };
+      reader.readAsText(file);
+      // reset input 
+      event.target.value = '';
+    },
+
+    // map CSV header to store key
+    mapHeaderToKey(header) {
+      const col = this.employeeStore.columns.find(c => c.title === header);
+      return col ? col.key : header;
+    },
 
 // employment status
 formatEmploymentStatus(dateStr) {
