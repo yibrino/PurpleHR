@@ -106,32 +106,50 @@
       
     </v-data-table>
   
-  <!-- Export Button -->
-  <v-btn color="#452624" class="ml-2" elevation="15" @click="exportEmployees">
-  <v-icon start color="white">mdi-download</v-icon>
-  <span style="color: white;">Export</span>
-</v-btn>
- <!-- Import Button-->
- <v-btn color="#452624" variant="outlined" @click="$refs.importInput.click()" class="ml-2">
-      <v-icon start>mdi-upload</v-icon>
-      Import
-    </v-btn>
+    <div class="d-flex justify-end align-center my-4" style="gap: 10px;">
+ 
 
-    <!-- Hidden file input -->
-    <input ref="importInput" type="file" @change="importEmployees" accept=".csv" style="display: none" />
-   
-            <v-btn
-    color="grey"
+  <!-- Import Button -->
+  <v-btn
+    color="#452624"
+    variant="outlined"
+    @click="$refs.importInput.click()"
+  >
+    <v-icon start>mdi-upload</v-icon>
+    Import
+  </v-btn>
+
+  <!-- Export Button -->
+  <v-btn
+    color="#452624"
+    elevation="15"
+    @click="exportEmployees"
+  >
+    <v-icon start color="white">mdi-download</v-icon>
+    <span style="color: white;">Export</span>
+  </v-btn>
+
+  <!-- Hidden file input -->
+  <input
+    ref="importInput"
+    type="file"
+    @change="importEmployees"
+    accept=".csv"
+    style="display: none"
+  />
+   <!-- Add Employee -->
+   <v-btn
+    color="#452624"
+    variant="outlined"
     @click="employeeStore.openDialog"
-    rounded
-    class="mt-8"
-    style="position: fixed; bottom: 20px; right: 20px; "
-    >
-    <v-icon class="me-2" color="#ffffff">mdi-account-plus</v-icon>
+  >
+    <v-icon start>mdi-account-plus</v-icon>
     <v-tooltip activator="parent" location="top">
-        Add New {{ employeeStore.dialogTitle }}
+      Add New {{ employeeStore.dialogTitle }}
     </v-tooltip>
-    </v-btn>
+  </v-btn>
+</div>
+
    
  
   <!-- Delete Confirmation Dialog -->
