@@ -105,25 +105,7 @@
       </template>
       
     </v-data-table>
-    <v-row>
-        <v-col>
-            <v-spacer>
-            </v-spacer>
-            <v-btn
-    color="grey"
-    @click="employeeStore.openDialog"
-    rounded
-    class="mt-8"
-    elevation="15"
-    style="position: fixed; bottom: 20px; right: 20px; z-index: 10;"
-    >
-    <v-icon class="me-2" color="#ffffff">mdi-account-plus</v-icon>
-    <v-tooltip activator="parent" location="top">
-        Add New {{ employeeStore.dialogTitle }}
-    </v-tooltip>
-    </v-btn>
-        </v-col>
-    </v-row>
+  
   <!-- Export Button -->
   <v-btn color="#452624" class="ml-2" elevation="15" @click="exportEmployees">
   <v-icon start color="white">mdi-download</v-icon>
@@ -137,7 +119,20 @@
 
     <!-- Hidden file input -->
     <input ref="importInput" type="file" @change="importEmployees" accept=".csv" style="display: none" />
-
+   
+            <v-btn
+    color="grey"
+    @click="employeeStore.openDialog"
+    rounded
+    class="mt-8"
+    style="position: fixed; bottom: 20px; right: 20px; "
+    >
+    <v-icon class="me-2" color="#ffffff">mdi-account-plus</v-icon>
+    <v-tooltip activator="parent" location="top">
+        Add New {{ employeeStore.dialogTitle }}
+    </v-tooltip>
+    </v-btn>
+   
  
   <!-- Delete Confirmation Dialog -->
     <v-dialog v-model="employeeStore.dialogDeleteVisible" max-width="600px" min-height="100px">
@@ -293,8 +288,8 @@ exportEmployees() {
   link.download = 'employees.csv';
   link.click();
 },
- /** IMPORT CSV **/
- importEmployees(event) {
+/** IMPORT CSV **/
+importEmployees(event) {
       const file = event.target.files[0];
       if (!file) return;
 
@@ -304,7 +299,7 @@ exportEmployees() {
         const [hdrLine, ...lines] = text.trim().split('\n');
         const headers = hdrLine.split(',').map(h => h.replace(/(^")|("$)/g, ''));
         const newRecords = lines.map(line => {
-          const cols = line.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g);
+          const cols = line.match(/(".*?"|[^",\s]+)(?="|,|\s*$)/g);
           const obj = {};
           headers.forEach((h, i) => {
             obj[this.mapHeaderToKey(h)] = cols[i]?.replace(/^"|"$/g, '');
@@ -312,12 +307,17 @@ exportEmployees() {
           return obj;
         });
 
-        // Merge records into the store
         this.employeeStore.items.push(...newRecords);
+        alert('Imported successfully!');
       };
       reader.readAsText(file);
-      // reset input 
       event.target.value = '';
+    },
+
+    // map CSV header to store key
+    mapHeaderToKey(header) {
+      const col = this.employeeStore.columns.find(c => c.title === header);
+      return col ? col.key : header;
     },
 
     // map CSV header to store key
