@@ -54,7 +54,7 @@
             <v-btn>
               <v-tooltip location="bottom">
                 <template v-slot:activator="{ props }">            
-                    <v-icon class="me-2" size="small" @click="editItem(item)" color="#452624" v-bind="props">
+                    <v-icon class="me-2" size="small" @click="editEmployee(item)" color="#452624" v-bind="props">
                       mdi-pencil
                     </v-icon>
                 </template>
@@ -112,7 +112,7 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="red-darken-1" variant="outlined" @click="employeeStore.closeDeleteDialog">Cancel</v-btn>
-          <v-btn color="#452624" variant="outlined" @click="employeeStore.deleteItem">OK</v-btn>
+          <v-btn color="#452624" variant="outlined" @click="employeeStore.deleteEmployee">OK</v-btn>
           <v-spacer></v-spacer>
         </v-card-actions>
       </v-card>
@@ -185,11 +185,17 @@ viewProfile(emp) {
     this.$router.push({ name: 'EmployeeProfile', params: { id: emp.id } }),
     this.employeeStore.isEditing=false
   },
-   editItem(item) {
-  this.employeeStore.editedItem = { ...item }; // Copy item data into editedItem
-  this.employeeStore.editedIndex = this.employeeStore.items.indexOf(item); // Store the index 
-  console.log("item to be edited", item);
-  this.employeeStore.openEditDialog(); // Open the  dialog
+// editEmployee in EmployeeProfile
+editEmployee(emp) {
+  this.employeeStore.editedItem = { ...emp }; // Copy item data into editedItem
+  this.employeeStore.editedIndex = this.employeeStore.items.indexOf(emp); // Store the index
+  console.log("Edited Item",this.employeeStore.editedItem )
+  this.employeeStore.isEditing=true, 
+  this.$router.push({
+    name:"EmployeeProfileEdit",
+    params:{id:emp.id},
+  })
+
   
 },
 

@@ -1,13 +1,13 @@
 import { defineStore } from "pinia";
-import { onBeforeMount } from "vue";
 import employeesData from "@/assets/employees.json";
-import { nextTick } from "vue"; // Import nextTick from Vue
+import { nextTick } from "vue"; // nextTick from Vue
 
 export const useEmployeeStore = defineStore("employee", {
   state: () => ({
     dialogTitle: "Employee",
     componentName: "employee",
     items: [],
+    // Columns of the grid
     columns: [
       { title: "Full Name", key: "fullName" },
       { title: "Occupation", key: "occupation" },
@@ -16,6 +16,7 @@ export const useEmployeeStore = defineStore("employee", {
       { title: "Termination Date", key: "terminationDate" },
       { title: "Actions", key: "actions", sortable: false },
     ],
+    // all fields
     formFields: [
       {
         key: "fullName",
@@ -66,7 +67,6 @@ export const useEmployeeStore = defineStore("employee", {
       },
     ],
     dialogVisible: false,
-    dialogEditVisible: false,
     dialogDeleteVisible: false,
     editedIndex: -1,
     editedItem: {
@@ -85,19 +85,18 @@ export const useEmployeeStore = defineStore("employee", {
       employmentDate: "",
       terminationDate: "",
     },
+    isEditing: false,
   }),
 
   actions: {
     initializeItems() {
-      this.items = [...employeesData]; // Use the imported JSON data
+      if (this.items.length === 0) {
+        this.items = [...employeesData];
+      }
     },
     // Open the dialog
     openDialog() {
       this.dialogVisible = true;
-    },
-    // Open the EditDialog
-    openEditDialog() {
-      this.dialogEditVisible = true;
     },
     // Open the DeleteDialog
     openDeleteDialog(item) {
@@ -112,14 +111,6 @@ export const useEmployeeStore = defineStore("employee", {
         this.editedIndex = -1;
       });
     },
-    // close the EditDialog
-    closeEditDialog() {
-      this.dialogEditVisible = false;
-      nextTick(() => {
-        this.editedItem = { ...this.defaultItem };
-        this.editedIndex = -1;
-      });
-    },
     // close the DeleteDialog
     closeDeleteDialog() {
       this.dialogDeleteVisible = false;
@@ -128,14 +119,26 @@ export const useEmployeeStore = defineStore("employee", {
         this.editedIndex = -1;
       });
     },
+
+    // Update an employee
+    updateEmployee(updatedEmp) {
+      const idx = this.items.findIndex(
+        (e) => Number(e.id) === Number(updatedEmp.id)
+      );
+      if (idx > -1) {
+        this.items.splice(idx, 1, { ...updatedEmp });
+      }
+      this.isEditing = false;
+    },
     // Add an Employee
     addEmployee() {
       const maxId = Math.max(...this.items.map((item) => item.id), 0);
       this.items.push({ ...this.editedItem, id: maxId + 1 });
       this.closeDialog();
     },
-    // Delete an item
-    deleteItem() {
+
+    // Delete an employee
+    deleteEmployee() {
       this.items = this.items.filter((item) => item.id !== this.editedItem.id);
       this.closeDeleteDialog();
     },
