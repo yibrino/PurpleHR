@@ -67,7 +67,7 @@ export default {
       rail:false,
       navigations: [],
       navItems:[
-          {title:"Employees", value:"profile",prependIcon:"mdi-account-circle",url:"employees",role:['Admin']},
+          {title:"Employees", value:"profile",prependIcon:"mdi-account-circle",url:"/employees",role:['Admin']},
        
       ],
      }
