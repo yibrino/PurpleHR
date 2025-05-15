@@ -1,92 +1,106 @@
 [
   {
-    "id": 1,
+    "id": 0,
     "fullName": "Yibrah Mehari",
     "occupation": "Software Engineer",
-    "department": "AI and Computer Science",
-    "employmentDate": "2024-05-01",
-    "terminationDate": "2026-05-01"
+    "department": "Artificial Intelligence And Computer Science",
+    "employmentDate": "2022-01-15",
+    "terminationDate": "2024-01-15"
+  },
+  {
+    "id": 1,
+    "fullName": "Mekdes Tadesse",
+    "occupation": "Data Scientist",
+    "department": "Data Analytics",
+    "employmentDate": "2022-01-15",
+    "terminationDate": "2024-01-15"
   },
   {
     "id": 2,
-    "fullName": "Degefom Kahsay",
-    "occupation": "AI Engineer",
-    "employmentDate": "2027-05-01",
-    "terminationDate": "2028-05-01"
+    "fullName": "Sisay Bekele",
+    "occupation": "Network Engineer",
+    "department": "Network Infrastructure",
+    "employmentDate": "2023-06-01",
+    "terminationDate": "2026-06-01"
   },
   {
     "id": 3,
-    "fullName": "Yibrah Mehari",
-    "occupation": "Software Engineer",
-    "department": "AI and Computer Science",
-    "employmentDate": "2024-05-01",
-    "terminationDate": "2026-05-01"
+    "fullName": "Hirut Alemu",
+    "occupation": "Cybersecurity Analyst",
+    "department": "IT Security",
+    "employmentDate": "2021-09-10",
+    "terminationDate": "2024-09-10"
   },
   {
     "id": 4,
-    "fullName": "Degefom Kahsay",
-    "occupation": "AI Engineer",
-    "employmentDate": "2027-05-01",
-    "terminationDate": "2028-05-01"
+    "fullName": "Lidya Hailu",
+    "occupation": "AI Researcher",
+    "department": "Artificial Intelligence",
+    "employmentDate": "2024-03-01",
+    "terminationDate": "2027-03-01"
   },
   {
     "id": 5,
-    "fullName": "Yibrah Mehari",
-    "occupation": "Software Engineer",
-    "department": "AI and Computer Science",
-    "employmentDate": "2024-05-01",
-    "terminationDate": "2026-05-01"
+    "fullName": "Temesgen Dinku",
+    "occupation": "Frontend Developer",
+    "department": "Software Development",
+    "employmentDate": "2020-05-20",
+    "terminationDate": "2023-05-20"
   },
   {
     "id": 6,
-    "fullName": "Degefom Kahsay",
-    "occupation": "AI Engineer",
-    "employmentDate": "2027-05-01",
-    "terminationDate": "2028-05-01"
+    "fullName": "Tigist Kebede",
+    "occupation": "UX Designer",
+    "department": "Product Design",
+    "employmentDate": "2022-11-01",
+    "terminationDate": "2025-11-01"
   },
   {
     "id": 7,
-    "fullName": "Yibrah Mehari",
-    "occupation": "Software Engineer",
-    "department": "AI and Computer Science",
-    "employmentDate": "2024-05-01",
-    "terminationDate": "2026-05-01"
+    "fullName": "Henok Getachew",
+    "occupation": "DevOps Engineer",
+    "department": "Cloud Operations",
+    "employmentDate": "2023-08-10",
+    "terminationDate": "2026-08-10"
   },
   {
     "id": 8,
-    "fullName": "Degefom Kahsay",
-    "occupation": "AI Engineer",
-    "employmentDate": "2027-05-01",
-    "terminationDate": "2028-05-01"
+    "fullName": "Meskerem Asfaw",
+    "occupation": "Machine Learning Engineer",
+    "department": "Artificial Intelligence",
+    "employmentDate": "2025-01-01",
+    "terminationDate": "2028-01-01"
   },
   {
     "id": 9,
-    "fullName": "Yibrah Mehari",
-    "occupation": "Software Engineer",
-    "department": "AI and Computer Science",
-    "employmentDate": "2024-05-01",
-    "terminationDate": "2026-05-01"
+    "fullName": "Abel Fikru",
+    "occupation": "Backend Developer",
+    "department": "Software Engineering",
+    "employmentDate": "2021-02-15",
+    "terminationDate": "2024-02-15"
   },
   {
     "id": 10,
-    "fullName": "Degefom Kahsay",
-    "occupation": "AI Engineer",
-    "employmentDate": "2027-05-01",
-    "terminationDate": "2028-05-01"
+    "fullName": "Selamawit Adamu",
+    "occupation": "QA Engineer",
+    "department": "Quality Assurance",
+    "employmentDate": "2023-07-01",
+    "terminationDate": "2026-07-01"
   },
   {
     "id": 11,
-    "fullName": "Yibrah Mehari",
-    "occupation": "Software Engineer",
-    "department": "AI and Computer Science",
-    "employmentDate": "2024-05-01",
-    "terminationDate": "2026-05-01"
+    "fullName": "Nahom Taye",
+    "occupation": "IT Support Specialist",
+    "department": "Technical Services",
+    "employmentDate": "2019-10-01",
+    "terminationDate": "2022-10-01"
   },
   {
     "id": 12,
-    "fullName": "Degefom Kahsay",
-    "occupation": "AI Engineer",
-    "employmentDate": "2027-05-01",
-    "terminationDate": "2028-05-01"
+    "fullName": "Betelhem Worku",
+    "occupation": "Full Stack Developer",
+    "department": "Software Engineering",
+    "employmentDate": "2020-12-01",
+    "terminationDate": "2023-12-01"
   }
 ]
