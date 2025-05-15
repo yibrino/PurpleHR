@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-data-table :headers="employeeStore.columns" :items="employeeStore.items" :search="search" items-per-page="6">
+    <v-data-table :headers="employeeStore.columns" :items="filteredEmployees" :search="search" items-per-page="6">
       
       <template v-slot:top>
         <v-toolbar flat>
@@ -22,7 +22,7 @@
           <v-select
   v-model="selectedDepartment"
   :items="departments"
-  label="Filter by Department"
+  label="Department"
   clearable
   class="mr-3"
   density="compact"
@@ -33,18 +33,7 @@
 <v-select
   v-model="selectedEmploymentStatus"
   :items="employmentStatusOptions"
-  label="Employment Status"
-  clearable
-  class="mr-3"
-  density="compact"
-  variant="outlined"
-  hide-details
-></v-select>
-
-<v-select
-  v-model="selectedTerminationStatus"
-  :items="terminationStatusOptions"
-  label="Termination Status"
+  label="Employment"
   clearable
   class="mr-3"
   density="compact"
@@ -201,10 +190,35 @@ export default {
     return {
       employeeStore: useEmployeeStore(),
       search: '',
+      selectedDepartment: null,
+      selectedEmploymentStatus: null,
       isEditValid: false,
       isValidAdd: false,
     };
   },
+  computed: {
+  departments() {
+    const allDepartments = this.employeeStore.items.map(emp => emp.department);
+    return [...new Set(allDepartments)].filter(Boolean); // remove duplicates and empty
+  },
+  employmentStatusOptions() {
+    return ['Currently Employed', 'Employed Soon'];
+  },
+  
+  filteredEmployees() {
+    return this.employeeStore.items.filter((emp) => {
+      const matchesSearch = Object.values(emp)
+        .some(value => String(value).toLowerCase().includes(this.search.toLowerCase()));
+
+      const matchesDepartment = this.selectedDepartment ? emp.department === this.selectedDepartment : true;
+
+      const employmentStatus = this.formatEmploymentStatus(emp.employmentDate);
+      const matchesEmployment = this.selectedEmploymentStatus ? employmentStatus === this.selectedEmploymentStatus : true;
+      return matchesSearch && matchesDepartment && matchesEmployment;
+    });
+  }
+},
+
   mounted() {
   this.employeeStore.initializeItems(); 
 },
