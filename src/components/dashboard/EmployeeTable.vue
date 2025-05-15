@@ -106,7 +106,7 @@
       
     </v-data-table>
     <v-row>
-        <v-co>
+        <v-col>
             <v-spacer>
             </v-spacer>
             <v-btn
@@ -122,7 +122,7 @@
         Add New {{ employeeStore.dialogTitle }}
     </v-tooltip>
     </v-btn>
-        </v-co>
+        </v-col>
     </v-row>
   <!-- Export Button -->
   <v-btn color="#452624" class="ml-2" elevation="15" @click="exportEmployees">
@@ -221,6 +221,7 @@ export default {
       return matchesSearch && matchesDepartment && matchesEmployment;
     });
   }
+  
 },
 
   mounted() {
@@ -248,6 +249,41 @@ editEmployee(emp) {
   })
 
   
+},
+
+exportEmployees() {
+  // ensure store is initialized
+  if (!this.employeeStore.items.length) {
+    this.employeeStore.initializeItems();
+  }
+
+  const headers = this.employeeStore.columns.map(h => h.title);
+  const keys    = this.employeeStore.columns.map(h => h.key);
+
+  console.log('Headers:', headers);
+  console.log('Keys:   ', keys);
+  console.log('Rows:   ', this.filteredEmployees);
+
+  const csvRows = this.filteredEmployees.length
+    ? this.filteredEmployees.map(emp =>
+        keys.map(key =>
+          `"${(emp[key] ?? '').toString().replace(/"/g, '""')}"`
+        ).join(',')
+      )
+    : [];
+
+  const csvContent = [ headers.join(','), ...csvRows ].join('\n');
+  console.log('CSV content:\n', csvContent);
+
+  if (!csvRows.length) {
+    return this.$toast.warning('No employee data to export.');
+  }
+
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = 'employees.csv';
+  link.click();
 },
 
 // employment status
